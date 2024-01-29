@@ -8,6 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = monogameTEST
-build_property.ProjectDir = C:\Users\Austn\OneDrive\Code\monogameTEST\monogameTEST\
-build_property.EnableComHosting = 
-build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.ProjectDir = G:\dev\JoinedTogetherJam\

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/Austn/OneDrive/Code/monogameTEST/monogameTEST/Content/desertBackground.png</SourceFile>
-  <SourceTime>2024-01-27T18:17:26.5751827-08:00</SourceTime>
-  <DestFile>C:/Users/Austn/OneDrive/Code/monogameTEST/monogameTEST/Content/bin/DesktopGL/Content/desertBackground.xnb</DestFile>
-  <DestTime>2024-01-27T18:23:48.1637787-08:00</DestTime>
+  <SourceFile>G:/dev/JoinedTogetherJam/Content/desertBackground.png</SourceFile>
+  <SourceTime>2024-01-28T20:18:33.2027096-08:00</SourceTime>
+  <DestFile>G:/dev/JoinedTogetherJam/Content/bin/DesktopGL/Content/desertBackground.xnb</DestFile>
+  <DestTime>2024-01-28T20:22:52.3504627-08:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T04:44:56-07:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

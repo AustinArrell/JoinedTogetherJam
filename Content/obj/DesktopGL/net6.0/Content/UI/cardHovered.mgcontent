@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/Austn/OneDrive/Code/monogameTEST/monogameTEST/Content/UI/cardHovered.png</SourceFile>
-  <SourceTime>2024-01-28T09:00:33.2548839-08:00</SourceTime>
-  <DestFile>C:/Users/Austn/OneDrive/Code/monogameTEST/monogameTEST/Content/bin/DesktopGL/Content/UI/cardHovered.xnb</DestFile>
-  <DestTime>2024-01-28T09:01:55.3164785-08:00</DestTime>
+  <SourceFile>G:/dev/JoinedTogetherJam/Content/UI/cardHovered.png</SourceFile>
+  <SourceTime>2024-01-28T20:18:33.0499102-08:00</SourceTime>
+  <DestFile>G:/dev/JoinedTogetherJam/Content/bin/DesktopGL/Content/UI/cardHovered.xnb</DestFile>
+  <DestTime>2024-01-28T20:22:52.4261037-08:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2022-07-26T04:44:56-07:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

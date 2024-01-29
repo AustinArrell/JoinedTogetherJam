@@ -18,11 +18,8 @@ namespace monogameTEST
         Deck sandSlimeDeck = new Deck();
         Deck currentEnemyDeck = new Deck();
 
-
-
         List<Card> playerHand = new List<Card>();
         
-
         Texture2D healthBarEmpty;
         Texture2D healthBarBar;
         Texture2D background;
@@ -170,7 +167,7 @@ namespace monogameTEST
                         playerHand[i + 1].cardArea = new Rectangle(playerHand[i + 1].Location, playerHand[i + 1].Size);
                         holdingCard = false;
                     }
-                    else if (Mouse.GetState().LeftButton == ButtonState.Pressed && leftClickReadyToPress) 
+                    else if (Mouse.GetState().LeftButton == ButtonState.Pressed && leftClickReadyToPress && Mouse.GetState().Y < 810) 
                     {
                         leftClickReadyToPress = false;
                         playerHand.RemoveAt(i);

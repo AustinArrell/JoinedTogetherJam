@@ -102,19 +102,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Austn\\.nuget\\packages\\": {}
+    "C:\\Users\\austi\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Austn\\OneDrive\\Code\\monogameTEST\\monogameTEST\\monogameTEST.csproj",
+      "projectUniqueName": "G:\\dev\\JoinedTogetherJam\\monogameTEST.csproj",
       "projectName": "monogameTEST",
-      "projectPath": "C:\\Users\\Austn\\OneDrive\\Code\\monogameTEST\\monogameTEST\\monogameTEST.csproj",
-      "packagesPath": "C:\\Users\\Austn\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Austn\\OneDrive\\Code\\monogameTEST\\monogameTEST\\obj\\",
+      "projectPath": "G:\\dev\\JoinedTogetherJam\\monogameTEST.csproj",
+      "packagesPath": "C:\\Users\\austi\\.nuget\\packages\\",
+      "outputPath": "G:\\dev\\JoinedTogetherJam\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Austn\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\austi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -122,6 +127,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -165,7 +171,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

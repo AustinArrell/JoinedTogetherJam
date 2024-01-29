@@ -4,17 +4,17 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/Austn/OneDrive/Code/monogameTEST/monogameTEST/Content/barsBar.png</File>
-    <File>C:/Users/Austn/OneDrive/Code/monogameTEST/monogameTEST/Content/barsEmpty.png</File>
-    <File>C:/Users/Austn/OneDrive/Code/monogameTEST/monogameTEST/Content/desertBackground.png</File>
-    <File>C:/Users/Austn/OneDrive/Code/monogameTEST/monogameTEST/Content/Enemies/Dragon Hawk.png</File>
-    <File>C:/Users/Austn/OneDrive/Code/monogameTEST/monogameTEST/Content/Enemies/Sand Slime.png</File>
-    <File>C:/Users/Austn/OneDrive/Code/monogameTEST/monogameTEST/Content/shieldCard.png</File>
-    <File>C:/Users/Austn/OneDrive/Code/monogameTEST/monogameTEST/Content/swordCard.png</File>
-    <File>C:/Users/Austn/OneDrive/Code/monogameTEST/monogameTEST/Content/UI/cardHovered.png</File>
-    <File>C:/Users/Austn/OneDrive/Code/monogameTEST/monogameTEST/Content/UI/debugMode.png</File>
-    <File>C:/Users/Austn/OneDrive/Code/monogameTEST/monogameTEST/Content/UI/deckIcon.png</File>
-    <File>C:/Users/Austn/OneDrive/Code/monogameTEST/monogameTEST/Content/UI/defaultFont.spritefont</File>
+    <File>G:/dev/JoinedTogetherJam/Content/barsBar.png</File>
+    <File>G:/dev/JoinedTogetherJam/Content/barsEmpty.png</File>
+    <File>G:/dev/JoinedTogetherJam/Content/desertBackground.png</File>
+    <File>G:/dev/JoinedTogetherJam/Content/Enemies/Dragon Hawk.png</File>
+    <File>G:/dev/JoinedTogetherJam/Content/Enemies/Sand Slime.png</File>
+    <File>G:/dev/JoinedTogetherJam/Content/shieldCard.png</File>
+    <File>G:/dev/JoinedTogetherJam/Content/swordCard.png</File>
+    <File>G:/dev/JoinedTogetherJam/Content/UI/cardHovered.png</File>
+    <File>G:/dev/JoinedTogetherJam/Content/UI/debugMode.png</File>
+    <File>G:/dev/JoinedTogetherJam/Content/UI/deckIcon.png</File>
+    <File>G:/dev/JoinedTogetherJam/Content/UI/defaultFont.spritefont</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />
