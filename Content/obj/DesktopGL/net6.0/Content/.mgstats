@@ -9,4 +9,4 @@ Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Siz
 "G:/dev/JoinedTogetherJam/Content/UI/cardHovered.png","G:/dev/JoinedTogetherJam/Content/bin/DesktopGL/Content/UI/cardHovered.xnb","TextureProcessor","Texture2DContent",1356,392037,0.0183386
 "G:/dev/JoinedTogetherJam/Content/UI/debugMode.png","G:/dev/JoinedTogetherJam/Content/bin/DesktopGL/Content/UI/debugMode.xnb","TextureProcessor","Texture2DContent",11133,8294485,0.1946552
 "G:/dev/JoinedTogetherJam/Content/UI/deckIcon.png","G:/dev/JoinedTogetherJam/Content/bin/DesktopGL/Content/UI/deckIcon.xnb","TextureProcessor","Texture2DContent",3171,40085,0.0063315
-"G:/dev/JoinedTogetherJam/Content/UI/defaultFont.spritefont","G:/dev/JoinedTogetherJam/Content/bin/DesktopGL/Content/UI/defaultFont.xnb","FontDescriptionProcessor","SpriteFontContent",2065,37919,0.1081829
+"G:/dev/JoinedTogetherJam/Content/UI/defaultFont.spritefont","G:/dev/JoinedTogetherJam/Content/bin/DesktopGL/Content/UI/defaultFont.xnb","FontDescriptionProcessor","SpriteFontContent",2065,37919,0.1961633

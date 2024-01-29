@@ -19,7 +19,8 @@ namespace monogameTEST
         Deck currentEnemyDeck = new Deck();
 
         List<Card> playerHand = new List<Card>();
-        
+
+        Texture2D filledRect;
         Texture2D healthBarEmpty;
         Texture2D healthBarBar;
         Texture2D background;
@@ -36,8 +37,15 @@ namespace monogameTEST
         bool spaceReadyToPress = true;
         bool leftClickReadyToPress = true;
         bool f3ReadyToPress = true;
+        bool downReadyToPress = true;
+        bool upReadyToPress = true;
         bool debugMode = false;
         bool holdingCard = false;
+
+        Character playerCharacter = new Character { Health = 25, Shield = 15, Type = "PLAYER", MaxHealth = 25, MaxShield=15 };
+        Character sandSlimeCharacter = new Character { Health = 85, Shield = 55, Type = "SANDSLIME", MaxShield=55, MaxHealth=85 };
+
+        Character currentEnemy;
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -80,14 +88,23 @@ namespace monogameTEST
             sandSlimeDeck.cards.Add(new Card { Owner = "ENEMY", Type = "SHIELD"});
 
             currentEnemyDeck = sandSlimeDeck;
+            currentEnemy = sandSlimeCharacter;
             ResetBattleDeck(playerDeck.cards, currentEnemyDeck.cards);
             SetupInitialPlayerHand();
+
+            
+
+
+            //Setup simple texture for health bar rectangles
+            filledRect = new Texture2D(GraphicsDevice, 1, 1);
+            filledRect.SetData(new Color[] { Color.White });
 
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
+            
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             swordCard = Content.Load<Texture2D>("swordCard");
@@ -117,7 +134,6 @@ namespace monogameTEST
                     playerHand.RemoveAt(i);
                 }
             }
-
 
             //Check for mouse hover over cards in player hand.
             var mouseState = Mouse.GetState();
@@ -186,11 +202,19 @@ namespace monogameTEST
                 }
             }
 
-            if (battleDeck.cards.Count() == 0 && playerHand.Count() == 0) 
+            if (battleDeck.cards.Count() == 0 && playerHand.Count() == 0)
             {
-                ResetBattleDeck(playerDeck.cards,currentEnemyDeck.cards);
+                ResetBattleDeck(playerDeck.cards, currentEnemyDeck.cards);
                 SetupInitialPlayerHand();
             }
+
+            // Calculate player status bar sizes
+            playerCharacter.HealthBarSize = (float)playerCharacter.Health / (float)playerCharacter.MaxHealth;
+            playerCharacter.ShieldBarSize = (float)playerCharacter.Shield / (float)playerCharacter.MaxShield;
+            currentEnemy.HealthBarSize = (float)currentEnemy.Health / (float)currentEnemy.MaxHealth;
+            currentEnemy.ShieldBarSize = (float)currentEnemy.Shield / (float)currentEnemy.MaxShield;
+
+
 
             // DEBUG // F3 places game in debug mde
             if (Keyboard.GetState().IsKeyDown(Keys.F3) && f3ReadyToPress) 
@@ -198,10 +222,6 @@ namespace monogameTEST
                 f3ReadyToPress = false;
                 debugMode = !debugMode;
             }
-
-            
-
-
             // DEBUG // Space reshuffles deck and redraws hand.
             if (debugMode && Keyboard.GetState().IsKeyDown(Keys.Space) && spaceReadyToPress )
             {
@@ -218,11 +238,38 @@ namespace monogameTEST
                     playerHand[i].cardArea = new Rectangle(playerHand[i].Location, playerHand[i].Size);
                 }
             }
+            // DEBUG // Arrow Keys damage characters
+            if (debugMode && Keyboard.GetState().IsKeyDown(Keys.Down) && downReadyToPress) 
+            {
+                downReadyToPress = false;
+                playerCharacter.Health -= 1;
+                playerCharacter.Shield -= 1;
+                currentEnemy.Health -= 1;
+                currentEnemy.Shield -= 1;
+            }
+            if (debugMode && Keyboard.GetState().IsKeyDown(Keys.Up) && upReadyToPress)
+            {
+                upReadyToPress = false;
+                playerCharacter.Health += 1;
+                playerCharacter.Shield += 1;
+                currentEnemy.Health += 1;
+                currentEnemy.Shield += 1;
+            }
+
+            // Clamp Health and Shield to 0 and Max values
+            playerCharacter.Health = Math.Min(playerCharacter.MaxHealth, Math.Max(0, playerCharacter.Health));
+            playerCharacter.Shield = Math.Min(playerCharacter.MaxShield, Math.Max(0, playerCharacter.Shield));
+            currentEnemy.Health = Math.Min(currentEnemy.MaxHealth, Math.Max(0, currentEnemy.Health));
+            currentEnemy.Shield = Math.Min(currentEnemy.MaxShield, Math.Max(0, currentEnemy.Shield));
 
             if (Mouse.GetState().LeftButton == ButtonState.Released)
                 leftClickReadyToPress = true;
             if (Keyboard.GetState().IsKeyUp(Keys.F3))
                 f3ReadyToPress = true;
+            if (Keyboard.GetState().IsKeyUp(Keys.Down))
+                downReadyToPress = true;
+            if (Keyboard.GetState().IsKeyUp(Keys.Up))
+                upReadyToPress = true;
             if (Keyboard.GetState().IsKeyUp(Keys.Space) && !spaceReadyToPress)
                 spaceReadyToPress = true;
             
@@ -234,8 +281,13 @@ namespace monogameTEST
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
-
             _spriteBatch.Draw(background, new Vector2(0, 0), Color.White);
+
+            // Draw status bars for player and enemy
+            _spriteBatch.Draw(filledRect, new Rectangle(new Point(50, 1000), new Point((int)(playerCharacter.HealthBarSize * (float)330), 22)), Color.Red);
+            _spriteBatch.Draw(filledRect, new Rectangle(new Point(50, 1023), new Point((int)(playerCharacter.ShieldBarSize * (float)330), 22)), Color.RoyalBlue);
+            _spriteBatch.Draw(filledRect, new Rectangle(new Point(1920 - 50 - 332, 1000), new Point((int)(currentEnemy.HealthBarSize * (float)330), 22)), Color.Red);
+            _spriteBatch.Draw(filledRect, new Rectangle(new Point(1920 - 50 - 332, 1023), new Point((int)(currentEnemy.ShieldBarSize * (float)330), 22)), Color.RoyalBlue);
 
             _spriteBatch.Draw(player, new Vector2(470, 550), Color.White);
             _spriteBatch.Draw(enemy, new Vector2(1250, 615), Color.White);
@@ -243,6 +295,18 @@ namespace monogameTEST
             _spriteBatch.Draw(healthBarEmpty, new Vector2(1920 - 50 - 332, 1000), Color.White);
             _spriteBatch.Draw(deckIcon, new Vector2(1750, 50), Color.White);
             _spriteBatch.DrawString(defaultFont, battleDeck.cards.Count().ToString(), new Vector2(1800,80), Color.Black);
+
+            _spriteBatch.DrawString(defaultFont, playerCharacter.Health.ToString(), new Vector2(307, 1000), Color.Black);
+            _spriteBatch.DrawString(defaultFont, $" / {playerCharacter.MaxHealth.ToString()}", new Vector2(330, 1000), Color.Black);
+            _spriteBatch.DrawString(defaultFont, playerCharacter.Shield.ToString(), new Vector2(307, 1021), Color.Black);
+            _spriteBatch.DrawString(defaultFont, $" / {playerCharacter.MaxShield.ToString()}", new Vector2(330, 1021), Color.Black);
+
+            _spriteBatch.DrawString(defaultFont, currentEnemy.Health.ToString(), new Vector2(1795, 1000), Color.Black);
+            _spriteBatch.DrawString(defaultFont, $" / {currentEnemy.MaxHealth.ToString()}", new Vector2(1818, 1000), Color.Black);
+            _spriteBatch.DrawString(defaultFont, currentEnemy.Shield.ToString(), new Vector2(1795, 1021), Color.Black);
+            _spriteBatch.DrawString(defaultFont, $" / {currentEnemy.MaxShield.ToString()}", new Vector2(1818, 1021), Color.Black);
+
+            _spriteBatch.DrawString(defaultFont, battleDeck.cards.Count().ToString(), new Vector2(1800, 80), Color.Black);
 
             for (int i = 0; i < playerHand.Count; i++) 
             {
@@ -280,8 +344,9 @@ namespace monogameTEST
             {
                 _spriteBatch.Draw(debugModeOverlay, new Vector2(0, 0), Color.White);
             }
-            
 
+
+            
             _spriteBatch.End();
 
             base.Draw(gameTime);

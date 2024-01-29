@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>G:/dev/JoinedTogetherJam/Content/UI/defaultFont.spritefont</SourceFile>
-  <SourceTime>2024-01-28T20:18:33.0509153-08:00</SourceTime>
+  <SourceTime>2024-01-29T12:17:27.5572345-08:00</SourceTime>
   <DestFile>G:/dev/JoinedTogetherJam/Content/bin/DesktopGL/Content/UI/defaultFont.xnb</DestFile>
-  <DestTime>2024-01-28T20:22:52.7533582-08:00</DestTime>
+  <DestTime>2024-01-29T12:17:29.4497089-08:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2022-07-26T04:44:56-07:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>
