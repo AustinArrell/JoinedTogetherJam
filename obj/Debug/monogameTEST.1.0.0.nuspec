@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>monogameTEST</id>
+    <version>1.0.0</version>
+    <authors>monogameTEST</authors>
+    <description>Package Description</description>
+    <repository type="git" />
+    <dependencies>
+      <group targetFramework="net6.0">
+        <dependency id="MonoGame.Content.Builder.Task" version="3.8.1.303" exclude="Build,Analyzers" />
+        <dependency id="MonoGame.Framework.DesktopGL" version="3.8.1.303" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <contentFiles>
+      <files include="any/net6.0/Content/bin/DesktopGL/Content/swordCard.xnb" buildAction="Content" />
+    </contentFiles>
+  </metadata>
+  <files>
+    <file src="C:\Users\Austn\OneDrive\Code\monogameTEST\monogameTEST\bin\Debug\net6.0\monogameTEST.runtimeconfig.json" target="lib\net6.0\monogameTEST.runtimeconfig.json" />
+    <file src="C:\Users\Austn\OneDrive\Code\monogameTEST\monogameTEST\bin\Debug\net6.0\monogameTEST.dll" target="lib\net6.0\monogameTEST.dll" />
+    <file src="C:\Users\Austn\OneDrive\Code\monogameTEST\monogameTEST\Content\bin\DesktopGL\Content\swordCard.xnb" target="content\Content\bin\DesktopGL\Content\swordCard.xnb" />
+    <file src="C:\Users\Austn\OneDrive\Code\monogameTEST\monogameTEST\Content\bin\DesktopGL\Content\swordCard.xnb" target="contentFiles\any\net6.0\Content\bin\DesktopGL\Content\swordCard.xnb" />
+  </files>
+</package>
