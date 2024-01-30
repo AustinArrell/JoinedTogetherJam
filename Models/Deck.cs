@@ -20,11 +20,11 @@ namespace monogameTEST.Models
         {
             if (cards.Count() >= 1)
             {
-                Card cardCopy = new Card { Type = cards.ElementAt(0).Type, Owner = cards.ElementAt(0).Owner };
+                Card cardCopy = new Card(cards.ElementAt(0).Owner, cards.ElementAt(0).Type);
                 cards.RemoveAt(0);
                 return cardCopy;
             }
-            return new Card();
+            return new Card("","");
         }
     }
 }

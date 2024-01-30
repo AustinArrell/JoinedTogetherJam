@@ -11,6 +11,13 @@ namespace monogameTEST.Models
 {
     public class Card
     {
+        public Card(string owner, string type) 
+        {
+            Owner= owner;
+            Type= type;
+            if (type == "SWORD")
+                cardValue = 4;
+        }
         public Rectangle cardArea { get; set; } = new Rectangle();
         public Point Location { get; set; } = new Point();
         public Point Size { get; set; } = new Point(187, 262);
@@ -19,5 +26,7 @@ namespace monogameTEST.Models
         public string Owner { get; set; }
         public bool isHovered { get; set; } = false;
         public bool isHeld { get; set; } = false;
+
+        public int cardValue { get; set; }
     }
 }

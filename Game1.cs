@@ -66,26 +66,26 @@ namespace monogameTEST
             _graphics.ApplyChanges();
 
             //Init player starter deck
-            playerDeck.cards.Add(new Card { Owner = "PLAYER", Type = "SWORD" });
-            playerDeck.cards.Add(new Card { Owner = "PLAYER", Type = "SWORD" });
-            playerDeck.cards.Add(new Card { Owner = "PLAYER", Type = "SWORD" });
-            playerDeck.cards.Add(new Card { Owner = "PLAYER", Type = "SWORD" });
-            playerDeck.cards.Add(new Card { Owner = "PLAYER", Type = "SWORD" });
-            playerDeck.cards.Add(new Card { Owner = "PLAYER", Type = "SHIELD" });
-            playerDeck.cards.Add(new Card { Owner = "PLAYER", Type = "SHIELD" });
-            playerDeck.cards.Add(new Card { Owner = "PLAYER", Type = "SHIELD" });
-            playerDeck.cards.Add(new Card { Owner = "PLAYER", Type = "SHIELD"});
+            playerDeck.cards.Add(new Card("PLAYER","SWORD" ));
+            playerDeck.cards.Add(new Card("PLAYER", "SWORD"));
+            playerDeck.cards.Add(new Card("PLAYER", "SWORD"));
+            playerDeck.cards.Add(new Card("PLAYER", "SWORD"));
+            playerDeck.cards.Add(new Card("PLAYER", "SWORD"));
+            playerDeck.cards.Add(new Card("PLAYER", "SHIELD"));
+            playerDeck.cards.Add(new Card("PLAYER", "SHIELD"));
+            playerDeck.cards.Add(new Card("PLAYER", "SHIELD"));
+            playerDeck.cards.Add(new Card("PLAYER", "SHIELD"));
 
             //Init sandSlime Deck
-            sandSlimeDeck.cards.Add(new Card { Owner = "ENEMY", Type = "SWORD" });
-            sandSlimeDeck.cards.Add(new Card { Owner = "ENEMY", Type = "SWORD" });
-            sandSlimeDeck.cards.Add(new Card { Owner = "ENEMY", Type = "SWORD" });
-            sandSlimeDeck.cards.Add(new Card { Owner = "ENEMY", Type = "SWORD" });
-            sandSlimeDeck.cards.Add(new Card { Owner = "ENEMY", Type = "SWORD" });
-            sandSlimeDeck.cards.Add(new Card { Owner = "ENEMY", Type = "SHIELD" });
-            sandSlimeDeck.cards.Add(new Card { Owner = "ENEMY", Type = "SHIELD" });
-            sandSlimeDeck.cards.Add(new Card { Owner = "ENEMY", Type = "SHIELD" });
-            sandSlimeDeck.cards.Add(new Card { Owner = "ENEMY", Type = "SHIELD"});
+            playerDeck.cards.Add(new Card("ENEMY", "SWORD"));
+            playerDeck.cards.Add(new Card("ENEMY", "SWORD"));
+            playerDeck.cards.Add(new Card("ENEMY", "SWORD"));
+            playerDeck.cards.Add(new Card("ENEMY", "SWORD"));
+            playerDeck.cards.Add(new Card("ENEMY", "SWORD"));
+            playerDeck.cards.Add(new Card("ENEMY", "SHIELD"));
+            playerDeck.cards.Add(new Card("ENEMY", "SHIELD"));
+            playerDeck.cards.Add(new Card("ENEMY", "SHIELD"));
+            playerDeck.cards.Add(new Card("ENEMY", "SHIELD"));
 
             currentEnemyDeck = sandSlimeDeck;
             currentEnemy = sandSlimeCharacter;
@@ -129,7 +129,7 @@ namespace monogameTEST
             // Wipe out empty cards from hand
             for (int i = 0; i < playerHand.Count; i++) 
             {
-                if (playerHand[i].Type == null) 
+                if (playerHand[i].Type == "") 
                 {
                     playerHand.RemoveAt(i);
                 }
@@ -183,6 +183,7 @@ namespace monogameTEST
                         playerHand[i + 1].cardArea = new Rectangle(playerHand[i + 1].Location, playerHand[i + 1].Size);
                         holdingCard = false;
                     }
+                    // Play Held Cards
                     else if (Mouse.GetState().LeftButton == ButtonState.Pressed && leftClickReadyToPress && Mouse.GetState().Y < 810) 
                     {
                         leftClickReadyToPress = false;
@@ -233,7 +234,7 @@ namespace monogameTEST
                 for (int i = 0; i < 6; i++)
                 {
                     Card temp = battleDeck.DrawCard();
-                    playerHand.Add(new Card { Owner = temp.Owner, Type = temp.Type });
+                    playerHand.Add(new Card(temp.Owner, temp.Type ));
                     playerHand[i].Location = new Point((i * 187) + 399, 818);
                     playerHand[i].cardArea = new Rectangle(playerHand[i].Location, playerHand[i].Size);
                 }
@@ -363,7 +364,7 @@ namespace monogameTEST
             for (int i = 0; i < 6; i++)
             {
                 Card temp = battleDeck.DrawCard();
-                playerHand.Add(new Card { Owner = temp.Owner, Type = temp.Type });
+                playerHand.Add(new Card(temp.Owner, temp.Type ));
                 playerHand[i].Location = new Point((i * 187) + 399, 818);
                 playerHand[i].cardArea = new Rectangle(playerHand[i].Location, playerHand[i].Size);
             }
@@ -374,6 +375,23 @@ namespace monogameTEST
             //Combine enemy deck with playerdeck
             battleDeck.cards = CreateBattleDeck(deck1, deck2);
             battleDeck.Shuffle();
+        }
+
+        public void PlayCard(Card card) 
+        {
+            switch (card.Type) 
+            {
+                case "SWORD":
+                    if (card.Owner == "PLAYER") 
+                    {
+                        
+                    }
+                    break;
+                case "SHIELD":
+                    break;
+
+            }
+        
         }
     }
 }
