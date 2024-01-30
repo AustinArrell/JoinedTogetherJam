@@ -42,6 +42,9 @@ namespace monogameTEST
         bool debugMode = false;
         bool holdingCard = false;
 
+
+
+
         Character playerCharacter = new Character { Health = 25, Shield = 15, Type = "PLAYER", MaxHealth = 25, MaxShield=15 };
         Character sandSlimeCharacter = new Character { Health = 15, Shield = 10, Type = "SANDSLIME", MaxShield=10, MaxHealth=15 };
 
