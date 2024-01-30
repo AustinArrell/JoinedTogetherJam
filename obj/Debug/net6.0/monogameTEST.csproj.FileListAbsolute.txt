@@ -74,3 +74,4 @@ G:\dev\JoinedTogetherJam\obj\Debug\net6.0\refint\monogameTEST.dll
 G:\dev\JoinedTogetherJam\obj\Debug\net6.0\monogameTEST.pdb
 G:\dev\JoinedTogetherJam\obj\Debug\net6.0\monogameTEST.genruntimeconfig.cache
 G:\dev\JoinedTogetherJam\obj\Debug\net6.0\ref\monogameTEST.dll
+G:\dev\JoinedTogetherJam\bin\Debug\net6.0\Content\UI\gameOver.xnb

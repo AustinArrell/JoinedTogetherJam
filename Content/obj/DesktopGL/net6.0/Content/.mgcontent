@@ -15,6 +15,7 @@
     <File>G:/dev/JoinedTogetherJam/Content/UI/debugMode.png</File>
     <File>G:/dev/JoinedTogetherJam/Content/UI/deckIcon.png</File>
     <File>G:/dev/JoinedTogetherJam/Content/UI/defaultFont.spritefont</File>
+    <File>G:/dev/JoinedTogetherJam/Content/UI/videoblocks-game-over-8-bit-funky-a-funky-colorful-4k-game-over-screen-animation-letters-falling-towards-the-center-8-bit-retro-style-red-and-yellow_hcqx9_kax_thumbnail-full06-3336441624.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />
@@ -28,5 +29,6 @@
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
+    <File>UI/gameOver.png</File>
   </DestFiles>
 </SourceFileCollection>

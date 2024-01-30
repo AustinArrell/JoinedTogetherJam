@@ -30,6 +30,7 @@ namespace monogameTEST
         Texture2D shieldCard;
         Texture2D cardHovered;
         Texture2D debugModeOverlay;
+        Texture2D gameOverScreen;
         Texture2D deckIcon;
 
         SpriteFont defaultFont;
@@ -39,11 +40,10 @@ namespace monogameTEST
         bool f3ReadyToPress = true;
         bool downReadyToPress = true;
         bool upReadyToPress = true;
+        bool f11ReadyToPress = true;
         bool debugMode = false;
         bool holdingCard = false;
-
-
-
+        bool gameOver = false;
 
         Character playerCharacter = new Character { Health = 25, Shield = 15, Type = "PLAYER", MaxHealth = 25, MaxShield=15 };
         Character sandSlimeCharacter = new Character { Health = 15, Shield = 10, Type = "SANDSLIME", MaxShield=10, MaxHealth=15 };
@@ -119,6 +119,7 @@ namespace monogameTEST
             player = Content.Load<Texture2D>("Enemies/dragonHawk");
             cardHovered = Content.Load<Texture2D>("UI/cardHovered");
             debugModeOverlay = Content.Load<Texture2D>("UI/debugMode");
+            gameOverScreen = Content.Load<Texture2D>("UI/gameOver");
             deckIcon = Content.Load<Texture2D>("UI/deckIcon");
 
             defaultFont = Content.Load<SpriteFont>("UI/defaultFont");
@@ -128,154 +129,171 @@ namespace monogameTEST
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            // Wipe out empty cards from hand
-            for (int i = 0; i < playerHand.Count; i++) 
+            if (Keyboard.GetState().IsKeyDown(Keys.F11) && f11ReadyToPress)
             {
-                if (playerHand[i].Type == "") 
-                {
-                    playerHand.RemoveAt(i);
-                }
+                f11ReadyToPress = false;
+                _graphics.IsFullScreen = !_graphics.IsFullScreen;
+                _graphics.ApplyChanges();
             }
 
-            //Check for mouse hover over cards in player hand.
-            var mouseState = Mouse.GetState();
-            var mousePoint = new Point(mouseState.X, mouseState.Y);
-            for (int i = 0; i < playerHand.Count; i++) 
+
+            if (!gameOver)
             {
-                if (playerHand[i].cardArea.Contains(mousePoint))
+                if (playerCharacter.Health <= 0) 
                 {
-                    playerHand[i].isHovered = true;
-                    if (holdingCard == false && Mouse.GetState().LeftButton == ButtonState.Pressed && i < playerHand.Count-1)
+                    gameOver = true;
+                }
+                // Wipe out empty cards from hand
+                for (int i = 0; i < playerHand.Count; i++)
+                {
+                    if (playerHand[i].Type == "")
                     {
-                        leftClickReadyToPress = false;
-                        foreach (Card card in playerHand) 
+                        playerHand.RemoveAt(i);
+                    }
+                }
+
+                //Check for mouse hover over cards in player hand.
+                var mouseState = Mouse.GetState();
+                var mousePoint = new Point(mouseState.X, mouseState.Y);
+                for (int i = 0; i < playerHand.Count; i++)
+                {
+                    if (playerHand[i].cardArea.Contains(mousePoint))
+                    {
+                        playerHand[i].isHovered = true;
+                        if (holdingCard == false && Mouse.GetState().LeftButton == ButtonState.Pressed && i < playerHand.Count - 1)
                         {
-                            if (card.isHeld)
+                            leftClickReadyToPress = false;
+                            foreach (Card card in playerHand)
+                            {
+                                if (card.isHeld)
+                                    holdingCard = true;
+                            }
+                            if (holdingCard == false)
+                            {
+                                playerHand[i].isHeld = true;
                                 holdingCard = true;
+                            }
                         }
-                        if (holdingCard == false)
-                        {
-                            playerHand[i].isHeld = true;
-                            holdingCard = true;
-                        }
-                    }  
+                    }
+                    else
+                        playerHand[i].isHovered = false;
                 }
-                else
-                    playerHand[i].isHovered = false;
-            }
 
-            // If card is held, move it and the next card in the hand with the mouse
-            for (int i = 0; i < playerHand.Count; i++)
-            {
-                if (playerHand[i].isHeld)
+                // If card is held, move it and the next card in the hand with the mouse
+                for (int i = 0; i < playerHand.Count; i++)
                 {
-                    playerHand[i].Location = mousePoint - new Point(playerHand[i].Size.X / 2, playerHand[i].Size.Y / 2);
-                    playerHand[i].cardArea = new Rectangle(playerHand[i].Location, playerHand[i].Size);
-
-                    playerHand[i + 1].Location = (mousePoint - new Point(playerHand[i + 1].Size.X / 2, playerHand[i + 1].Size.Y / 2) + new Point(playerHand[i + 1].Size.X, 0));
-                    playerHand[i + 1].cardArea = new Rectangle(playerHand[i + 1].Location, playerHand[i + 1].Size);
-
-                    if (Mouse.GetState().RightButton == ButtonState.Pressed)
+                    if (playerHand[i].isHeld)
                     {
-                        playerHand[i].isHeld = false;
-                        playerHand[i].Location = new Point((i * 187) + 399, 818);
+                        playerHand[i].Location = mousePoint - new Point(playerHand[i].Size.X / 2, playerHand[i].Size.Y / 2);
                         playerHand[i].cardArea = new Rectangle(playerHand[i].Location, playerHand[i].Size);
 
-                        playerHand[i + 1].Location = new Point(((i + 1) * 187) + 399, 818);
+                        playerHand[i + 1].Location = (mousePoint - new Point(playerHand[i + 1].Size.X / 2, playerHand[i + 1].Size.Y / 2) + new Point(playerHand[i + 1].Size.X, 0));
                         playerHand[i + 1].cardArea = new Rectangle(playerHand[i + 1].Location, playerHand[i + 1].Size);
-                        holdingCard = false;
-                    }
-                    // Play Held Cards
-                    else if (Mouse.GetState().LeftButton == ButtonState.Pressed && leftClickReadyToPress && Mouse.GetState().Y < 810) 
-                    {
-                        leftClickReadyToPress = false;
-                        PlayCard(playerHand[i]);
-                        playerHand.RemoveAt(i);
-                        PlayCard(playerHand[i]);
-                        playerHand.RemoveAt(i);
-                        holdingCard = false;
-                        playerHand.Add(battleDeck.DrawCard());
-                        playerHand.Add(battleDeck.DrawCard());
 
-                        for (int j = 0; j < playerHand.Count; j++) 
+                        if (Mouse.GetState().RightButton == ButtonState.Pressed)
                         {
-                            playerHand[j].Location = new Point((j * 187) + 399, 818);
-                            playerHand[j].cardArea = new Rectangle(playerHand[j].Location, playerHand[j].Size);
+                            playerHand[i].isHeld = false;
+                            playerHand[i].Location = new Point((i * 187) + 399, 818);
+                            playerHand[i].cardArea = new Rectangle(playerHand[i].Location, playerHand[i].Size);
+
+                            playerHand[i + 1].Location = new Point(((i + 1) * 187) + 399, 818);
+                            playerHand[i + 1].cardArea = new Rectangle(playerHand[i + 1].Location, playerHand[i + 1].Size);
+                            holdingCard = false;
                         }
-                        break;
+                        // Play Held Cards
+                        else if (Mouse.GetState().LeftButton == ButtonState.Pressed && leftClickReadyToPress && Mouse.GetState().Y < 810)
+                        {
+                            leftClickReadyToPress = false;
+                            PlayCard(playerHand[i]);
+                            playerHand.RemoveAt(i);
+                            PlayCard(playerHand[i]);
+                            playerHand.RemoveAt(i);
+                            holdingCard = false;
+                            playerHand.Add(battleDeck.DrawCard());
+                            playerHand.Add(battleDeck.DrawCard());
+
+                            for (int j = 0; j < playerHand.Count; j++)
+                            {
+                                playerHand[j].Location = new Point((j * 187) + 399, 818);
+                                playerHand[j].cardArea = new Rectangle(playerHand[j].Location, playerHand[j].Size);
+                            }
+                            break;
+                        }
                     }
                 }
-            }
 
-            if (battleDeck.cards.Count() == 0 && playerHand.Count() == 0)
-            {
-                ResetBattleDeck(playerDeck.cards, currentEnemyDeck.cards);
-                SetupInitialPlayerHand();
-            }
-
-            // Calculate player status bar sizes
-            playerCharacter.HealthBarSize = (float)playerCharacter.Health / (float)playerCharacter.MaxHealth;
-            playerCharacter.ShieldBarSize = (float)playerCharacter.Shield / (float)playerCharacter.MaxShield;
-            currentEnemy.HealthBarSize = (float)currentEnemy.Health / (float)currentEnemy.MaxHealth;
-            currentEnemy.ShieldBarSize = (float)currentEnemy.Shield / (float)currentEnemy.MaxShield;
-
-            // DEBUG // F3 places game in debug mde
-            if (Keyboard.GetState().IsKeyDown(Keys.F3) && f3ReadyToPress) 
-            {
-                f3ReadyToPress = false;
-                debugMode = !debugMode;
-            }
-            // DEBUG // Space reshuffles deck and redraws hand.
-            if (debugMode && Keyboard.GetState().IsKeyDown(Keys.Space) && spaceReadyToPress )
-            {
-                holdingCard = false;
-                spaceReadyToPress = false;
-                battleDeck.cards = CreateBattleDeck(playerDeck.cards, sandSlimeDeck.cards);
-                battleDeck.Shuffle();
-                playerHand.Clear();
-                for (int i = 0; i < 6; i++)
+                if (battleDeck.cards.Count() == 0 && playerHand.Count() == 0)
                 {
-                    Card temp = battleDeck.DrawCard();
-                    playerHand.Add(new Card(temp.Owner, temp.Type ));
-                    playerHand[i].Location = new Point((i * 187) + 399, 818);
-                    playerHand[i].cardArea = new Rectangle(playerHand[i].Location, playerHand[i].Size);
+                    ResetBattleDeck(playerDeck.cards, currentEnemyDeck.cards);
+                    SetupInitialPlayerHand();
                 }
-            }
-            // DEBUG // Arrow Keys damage characters
-            if (debugMode && Keyboard.GetState().IsKeyDown(Keys.Down) && downReadyToPress) 
-            {
-                downReadyToPress = false;
-                playerCharacter.Health -= 1;
-                playerCharacter.Shield -= 1;
-                currentEnemy.Health -= 1;
-                currentEnemy.Shield -= 1;
-            }
-            if (debugMode && Keyboard.GetState().IsKeyDown(Keys.Up) && upReadyToPress)
-            {
-                upReadyToPress = false;
-                playerCharacter.Health += 1;
-                playerCharacter.Shield += 1;
-                currentEnemy.Health += 1;
-                currentEnemy.Shield += 1;
-            }
 
-            // Clamp Health and Shield to 0 and Max values
-            playerCharacter.Health = Math.Min(playerCharacter.MaxHealth, Math.Max(0, playerCharacter.Health));
-            playerCharacter.Shield = Math.Min(playerCharacter.MaxShield, Math.Max(0, playerCharacter.Shield));
-            currentEnemy.Health = Math.Min(currentEnemy.MaxHealth, Math.Max(0, currentEnemy.Health));
-            currentEnemy.Shield = Math.Min(currentEnemy.MaxShield, Math.Max(0, currentEnemy.Shield));
+                // Calculate player status bar sizes
+                playerCharacter.HealthBarSize = (float)playerCharacter.Health / (float)playerCharacter.MaxHealth;
+                playerCharacter.ShieldBarSize = (float)playerCharacter.Shield / (float)playerCharacter.MaxShield;
+                currentEnemy.HealthBarSize = (float)currentEnemy.Health / (float)currentEnemy.MaxHealth;
+                currentEnemy.ShieldBarSize = (float)currentEnemy.Shield / (float)currentEnemy.MaxShield;
 
-            if (Mouse.GetState().LeftButton == ButtonState.Released)
-                leftClickReadyToPress = true;
-            if (Keyboard.GetState().IsKeyUp(Keys.F3))
-                f3ReadyToPress = true;
-            if (Keyboard.GetState().IsKeyUp(Keys.Down))
-                downReadyToPress = true;
-            if (Keyboard.GetState().IsKeyUp(Keys.Up))
-                upReadyToPress = true;
-            if (Keyboard.GetState().IsKeyUp(Keys.Space) && !spaceReadyToPress)
-                spaceReadyToPress = true;
+                // DEBUG // F3 places game in debug mde
+                if (Keyboard.GetState().IsKeyDown(Keys.F3) && f3ReadyToPress)
+                {
+                    f3ReadyToPress = false;
+                    debugMode = !debugMode;
+                }
+                // DEBUG // Space reshuffles deck and redraws hand.
+                if (debugMode && Keyboard.GetState().IsKeyDown(Keys.Space) && spaceReadyToPress)
+                {
+                    holdingCard = false;
+                    spaceReadyToPress = false;
+                    battleDeck.cards = CreateBattleDeck(playerDeck.cards, sandSlimeDeck.cards);
+                    battleDeck.Shuffle();
+                    playerHand.Clear();
+                    for (int i = 0; i < 6; i++)
+                    {
+                        Card temp = battleDeck.DrawCard();
+                        playerHand.Add(new Card(temp.Owner, temp.Type));
+                        playerHand[i].Location = new Point((i * 187) + 399, 818);
+                        playerHand[i].cardArea = new Rectangle(playerHand[i].Location, playerHand[i].Size);
+                    }
+                }
+                // DEBUG // Arrow Keys damage characters
+                if (debugMode && Keyboard.GetState().IsKeyDown(Keys.Down) && downReadyToPress)
+                {
+                    downReadyToPress = false;
+                    playerCharacter.Health -= 1;
+                    playerCharacter.Shield -= 1;
+                    currentEnemy.Health -= 1;
+                    currentEnemy.Shield -= 1;
+                }
+                if (debugMode && Keyboard.GetState().IsKeyDown(Keys.Up) && upReadyToPress)
+                {
+                    upReadyToPress = false;
+                    playerCharacter.Health += 1;
+                    playerCharacter.Shield += 1;
+                    currentEnemy.Health += 1;
+                    currentEnemy.Shield += 1;
+                }
+
+                // Clamp Health and Shield to 0 and Max values
+                playerCharacter.Health = Math.Min(playerCharacter.MaxHealth, Math.Max(0, playerCharacter.Health));
+                playerCharacter.Shield = Math.Min(playerCharacter.MaxShield, Math.Max(0, playerCharacter.Shield));
+                currentEnemy.Health = Math.Min(currentEnemy.MaxHealth, Math.Max(0, currentEnemy.Health));
+                currentEnemy.Shield = Math.Min(currentEnemy.MaxShield, Math.Max(0, currentEnemy.Shield));
+
+                if (Mouse.GetState().LeftButton == ButtonState.Released)
+                    leftClickReadyToPress = true;
+                if (Keyboard.GetState().IsKeyUp(Keys.F3))
+                    f3ReadyToPress = true;
+                if (Keyboard.GetState().IsKeyUp(Keys.Down))
+                    downReadyToPress = true;
+                if (Keyboard.GetState().IsKeyUp(Keys.Up))
+                    upReadyToPress = true;
+                if (Keyboard.GetState().IsKeyUp(Keys.Space))
+                    spaceReadyToPress = true;
+                if (Keyboard.GetState().IsKeyUp(Keys.F11))
+                    f11ReadyToPress = true;
+
+            }
             
             base.Update(gameTime);
         }
@@ -345,12 +363,10 @@ namespace monogameTEST
             }
 
             if (debugMode) 
-            {
                 _spriteBatch.Draw(debugModeOverlay, new Vector2(0, 0), Color.White);
-            }
+            if (gameOver)
+                _spriteBatch.Draw(gameOverScreen, new Vector2(0, 0), Color.White);
 
-
-            
             _spriteBatch.End();
 
             base.Draw(gameTime);
