@@ -18,5 +18,18 @@ namespace monogameTEST.Models
 
         public float HealthBarSize { get; set; } = 1;
         public float ShieldBarSize { get; set; } = 1;
+
+        public void TakeDamage(int damageAmount) 
+        {
+            for (int i = 0; i < damageAmount; i++) 
+            {
+                if (Shield > 0)
+                    Shield -= 1;
+                else
+                    Health -= 1;
+            }
+        }
+
+
     }
 }

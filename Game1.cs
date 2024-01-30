@@ -43,7 +43,7 @@ namespace monogameTEST
         bool holdingCard = false;
 
         Character playerCharacter = new Character { Health = 25, Shield = 15, Type = "PLAYER", MaxHealth = 25, MaxShield=15 };
-        Character sandSlimeCharacter = new Character { Health = 85, Shield = 55, Type = "SANDSLIME", MaxShield=55, MaxHealth=85 };
+        Character sandSlimeCharacter = new Character { Health = 15, Shield = 10, Type = "SANDSLIME", MaxShield=10, MaxHealth=15 };
 
         Character currentEnemy;
 
@@ -60,7 +60,7 @@ namespace monogameTEST
         protected override void Initialize()
         {
             //Configure default graphics settings
-            _graphics.IsFullScreen = true;
+            _graphics.IsFullScreen = false;
             _graphics.PreferredBackBufferWidth = 1920;
             _graphics.PreferredBackBufferHeight = 1080;
             _graphics.ApplyChanges();
@@ -187,7 +187,9 @@ namespace monogameTEST
                     else if (Mouse.GetState().LeftButton == ButtonState.Pressed && leftClickReadyToPress && Mouse.GetState().Y < 810) 
                     {
                         leftClickReadyToPress = false;
+                        PlayCard(playerHand[i]);
                         playerHand.RemoveAt(i);
+                        PlayCard(playerHand[i]);
                         playerHand.RemoveAt(i);
                         holdingCard = false;
                         playerHand.Add(battleDeck.DrawCard());
@@ -214,8 +216,6 @@ namespace monogameTEST
             playerCharacter.ShieldBarSize = (float)playerCharacter.Shield / (float)playerCharacter.MaxShield;
             currentEnemy.HealthBarSize = (float)currentEnemy.Health / (float)currentEnemy.MaxHealth;
             currentEnemy.ShieldBarSize = (float)currentEnemy.Shield / (float)currentEnemy.MaxShield;
-
-
 
             // DEBUG // F3 places game in debug mde
             if (Keyboard.GetState().IsKeyDown(Keys.F3) && f3ReadyToPress) 
@@ -382,12 +382,16 @@ namespace monogameTEST
             switch (card.Type) 
             {
                 case "SWORD":
-                    if (card.Owner == "PLAYER") 
-                    {
-                        
-                    }
+                    if (card.Owner == "PLAYER")
+                        currentEnemy.TakeDamage(card.cardValue);
+                    else
+                        playerCharacter.TakeDamage(card.cardValue);
                     break;
                 case "SHIELD":
+                    if (card.Owner == "PLAYER")
+                        playerCharacter.Shield += card.cardValue;
+                    else
+                        currentEnemy.Shield += card.cardValue;
                     break;
 
             }

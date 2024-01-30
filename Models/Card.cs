@@ -17,6 +17,8 @@ namespace monogameTEST.Models
             Type= type;
             if (type == "SWORD")
                 cardValue = 4;
+            if (type == "SHIELD")
+                cardValue = 2;
         }
         public Rectangle cardArea { get; set; } = new Rectangle();
         public Point Location { get; set; } = new Point();
